@@ -737,3 +737,61 @@ POST request Header
 
           .... ....
    }
+
+// Protecting a resource with the Authorize attribute
+	controller
+	action method
+
+// Authorize options
+	Roles : [Authorize(Roles="Administrators, Support")]
+	users : [Authorize(Users="abc@abc.com, admin@abc.com")]
+
+// ProductController
+
+[Authorize()]
+public IHttpActionResult Get(int id)
+{
+
+}
+
+//WebApiConfig.cs
+
+// Uncommnet 2 lines
+	config.SuppressDefaultHostAuthentication();
+	config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
+
+//
+//Accessing a restricted resource
+//
+
+new service : currentUser
+currentUser.js
+{function () {
+	"use strict";
+	angular
+	.module("common.services")
+	.factory("currentUser",
+		 currentUser);
+
+	function currentUser() {  
+	  var profile = {
+	    isloggedIn : false,
+  	    userName " '',
+	    token: ''
+	  };
+
+	  var setProfile = function(username, token) {
+	    profile.username = username;
+	    profile.token = token;
+	    profile.isloggedIn  = true;
+	  };
+
+
+	  var getProfile = function () {
+	    return profile;
+	  }
+	  return {
+	    setProfile: setProfile,
+	    getProfile: getProfile
+	  }
+})();
